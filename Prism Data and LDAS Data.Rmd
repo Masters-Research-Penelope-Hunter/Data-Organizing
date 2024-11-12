@@ -1,0 +1,168 @@
+---
+title: "Prism Data Organizing"
+author: "Penny Hunter"
+date: "2024-10-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+source("Setup.R")
+```
+
+#Loading Prism Data
+
+```{r}
+#load ppt data
+ppt_county_data_part1 <- read_csv('PrismData/ppt_county/ppt_daily_county_part1.csv')
+
+ppt_county_data_part2 <- read_csv('PrismData/ppt_county/ppt_daily_county_part2.csv')
+```
+ 
+```{r}
+#load tmax data
+tmax_county_data_part1 <- read_csv('PrismData/tmax_county/tmax_daily_county_part1.csv')
+
+tmax_county_data_part2 <- read_csv('PrismData/tmax_county/tmax_daily_county_part2.csv')
+```
+```{r}
+# load tmin data
+tmin_county_data_part1 <- read_csv('PrismData/tmin_county/tmin_daily_county_part1.csv')
+
+tmin_county_data_part2 <- read_csv('PrismData/tmin_county/tmin_daily_county_part2.csv')
+```
+```{r}
+# load vpdmax data
+vpdmax_county_data_part1 <- read_csv('PrismData/vpdmax_county/vpdmax_daily_county_part1.csv')
+
+vpdmax_county_data_part2 <- read_csv('PrismData/vpdmax_county/vpdmax_daily_county_part2.csv')
+```
+
+```{r}
+# load vpdmin data
+vpdmin_county_data_part1 <- read_csv('PrismData/vpdmin_county/vpdmin_daily_county_part1.csv')
+
+vpdmin_county_data_part2 <- read_csv('PrismData/vpdmin_county/vpdmin_daily_county_part2.csv')
+```
+
+```{r}
+# load vpdmean data
+vpdmean_county_data_part1 <- read_csv('PrismData/vpdmean_county/vpdmean_daily_county_part1.csv')
+
+vpdmean_county_data_part2 <- read_csv('PrismData/vpdmean_county/vpdmean_daily_county_part2.csv')
+```
+
+
+#Making a list of each variable folder to merge
+
+```{r}
+#make a file list from the data1 folder where the ppt data is 
+files_ppt_county <- list.files("PrismData/ppt_county", full.names = TRUE, pattern = "*.csv")
+files_ppt_county
+```
+
+```{r}
+#make a file list from the data1 folder where the tmax data is 
+files_tmax_county <- list.files("PrismData/tmax_county", full.names = TRUE, pattern = "*.csv")
+files_tmax_county
+```
+
+```{r}
+#make a file list from the data1 folder where the tmin data is 
+files_tmin_county <- list.files("PrismData/tmin_county", full.names = TRUE, pattern = "*.csv")
+files_tmin_county
+```
+
+```{r}
+#make a file list from the data1 folder where the vpdmax data is 
+files_vpdmax_county <- list.files("PrismData/vpdmax_county", full.names = TRUE, pattern = "*.csv")
+files_vpdmax_county
+```
+
+```{r}
+#make a file list from the data1 folder where the vpdmin data is 
+files_vpdmin_county <- list.files("PrismData/vpdmin_county", full.names = TRUE, pattern = "*.csv")
+files_vpdmin_county
+```
+
+```{r}
+#make a file list from the data1 folder where the vpdmean data is 
+files_vpdmean_county <- list.files("PrismData/vpdmean_county", full.names = TRUE, pattern = "*.csv")
+files_vpdmean_county
+```
+
+
+
+#Maping each list to merge 
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+ppt_county_full <- map_dfr(files_ppt_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+tmax_county_full <- map_dfr(files_tmax_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+tmin_county_full <- map_dfr(files_tmin_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+vpdmax_county_full <- map_dfr(files_vpdmax_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+vpdmean_county_full <- map_dfr(files_vpdmean_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+```{r}
+#map both data sets part 1 and 2 and join to make a full complete data set
+vpdmin_county_full <- map_dfr(files_vpdmin_county, read_csv) #code that combines part 1 and 2 of ppt daily county data brought from google code lab 
+```
+
+
+# Getting Licking County Subset of each new full data set
+
+```{r}
+#full licking county ppt data 1981-2018
+licking_ppt_county_full <- ppt_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+```{r}
+#full licking county tmax data 1981-2018
+licking_tmax_county_full <- tmax_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+
+```{r}
+#full licking county tmin data 1981-2018
+licking_tmin_county_full <- tmin_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+```{r}
+#full licking county vpdmax data 1981-2018
+licking_vpdmax_county_full <- vpdmax_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+```{r}
+#full licking county vpdmean data 1981-2018
+licking_vpdmean_county_full <- vpdmean_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+```{r}
+#full licking county vpdmin data 1981-2018
+licking_vpdmin_county_full <- vpdmin_county_full  %>%
+  filter(str_detect(county_name, "Licking"))
+```
+
+
